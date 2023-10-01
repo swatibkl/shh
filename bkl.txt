@@ -1,0 +1,1436 @@
+
+ 
+Practical No1: Web page to demonstrate server controls. 
+ 
+Aim: Create a simple web page with various server controls to demonstrate setting and use of their properties (Example: AutoPostBack). 
+Default.aspx: 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+ 
+FIRST NAME :<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox><br /> <br /> 
+LAST NAME :<asp:TextBox ID="TextBox2" runat="server"></asp:TextBox><br /> <br /> 
+CLASS :<asp:TextBox ID="TextBox3" runat="server"></asp:TextBox><br /> <br /> 
+ADDRESS :<asp:TextBox ID="TextBox4" runat="server"></asp:TextBox><br /> <br /> 
+MOBILE NO :<asp:TextBox ID="TextBox5" runat="server"></asp:TextBox><br /> <br /> SUBJECT :<br /> <br /> 
+ 
+<asp:CheckBox ID="CheckBox1" runat="server" Text="Asp.Net" /> <br /> <br /> 
+<asp:CheckBox ID="CheckBox2" runat="server" Text="Linux" /><br /> <br /> 
+<asp:CheckBox ID="CheckBox3" runat="server" Text="Java" /><br /> <br /> 
+<asp:Button ID="Button1" runat="server" Text="DISPLAY" onclick="Button1_Click" /> &nbsp &nbsp 
+<asp:Button ID="Button2" runat="server" Text="CANCEL" onclick="Button2_Click" /> 
+<br /> <br /> 
+ 
+<asp:Label ID="Label1" runat="server" Text=""></asp:Label> 
+ 
+</div> 
+</form> 
+</body> 
+</html>
+ 
+Default.aspx.cs: 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+ 
+} 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+Label1.Text += "First Name :" + TextBox1.Text + "<br />"; 
+Label1.Text += "Last Name : " + TextBox2.Text + "<br />"; 
+Label1.Text += "Class : " + TextBox3.Text + "<br />"; 
+Label1.Text += "Address : " + TextBox4.Text + "<br />"; 
+Label1.Text += "Mobile No : " + TextBox5.Text + "<br />"; 
+Label1.Text += "Subject :  <br />"; if (CheckBox1.Checked == true) Label1.Text += CheckBox1.Text + "<br />"; if (CheckBox2.Checked == true) Label1.Text += CheckBox2.Text + "<br />"; if (CheckBox3.Checked == true) Label1.Text += CheckBox3.Text + "<br />"; 
+ 
+} 
+ 
+protected void Button2_Click(object sender, EventArgs e) 
+{ 
+TextBox1.Text = ""; 
+TextBox2.Text = ""; 
+TextBox3.Text = ""; 
+TextBox4.Text = ""; 
+TextBox5.Text = ""; 
+CheckBox1.Checked = false; 
+CheckBox2.Checked = false; 
+CheckBox3.Checked = false; 
+Label1.Text = ""; 
+                } 
+                } 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+  
+Practical No2: Working with form Controls. 
+Practical 2(A): 
+Aim: Create a Registration form to demonstrate use of various Validation Controls Deafult.aspx: 
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %> 
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+ 
+ 
+Name:<asp:TextBox ID="TextBox1" runat="server" ></asp:TextBox> 
+ 
+<asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage=" Field cannot be blank" ControlToValidate="TextBox1"></asp:RequiredFieldValidator> <br /><br /> 
+ 
+Age:<asp:TextBox ID="TextBox2" runat="server" ></asp:TextBox> 
+ 
+<asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
+ErrorMessage="Field cannot be blank" 
+ControlToValidate="TextBox2"></asp:RequiredFieldValidator> 
+ 
+<asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Age should be 
+between 18 to 100" Type="Integer" Font-Italic="True" Font-Bold="True" 
+ControlToValidate="TextBox2" MaximumValue="100" 
+MinimumValue="18"></asp:RangeValidator> 
+<br /> <br /> 
+ 
+  Password:<asp:TextBox ID="TextBox3" runat="server" TextMode="Password"></asp:TextBox> <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
+ErrorMessage="Field cannot be blank" 
+ControlToValidate="TextBox3"></asp:RequiredFieldValidator> 
+ 
+<br /><br /> 
+ 
+ Reenter password:<asp:TextBox ID="TextBox4" runat="server" TextMode="Password"></asp:TextBox> 
+ 
+<asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" 
+ErrorMessage="Field cannot be blank" 
+ControlToValidate="TextBox4"></asp:RequiredFieldValidator> 
+ 
+<asp:CompareValidator ID="CompareValidator1" runat="server" ErrorMessage="Password does not match" ControlToValidate="TextBox4" 
+ControlToCompare="TextBox3"></asp:CompareValidator><br /><br /> 
+ 
+Emailid:<asp:TextBox ID="TextBox5" runat="server" ></asp:TextBox> 
+ 
+<asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" 
+ErrorMessage="Field cannot be blank" 
+ControlToValidate="TextBox5"></asp:RequiredFieldValidator> 
+ 
+<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
+ErrorMessage="Email should have @ " ControlToValidate="TextBox5" 
+ValidationExpression=".+@.+"></asp:RegularExpressionValidator><br /><br /><br /> 
+ 
+<asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click" /><br /> 
+ 
+<asp:Label ID="Label1" runat="server" Text=""></asp:Label> <br /><br /> 
+ 
+<asp:ValidationSummary ID="ValidationSummary1" runat="server" /> 
+ 
+ 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+ 
+Practical 2B: 
+ 
+Aim: Create Web Form to demonstrate use of AdRotator Control. 
+ 
+Default.aspx: 
+ 
+<%
+
+ult"
+%>
+@PageLanguage="C#"AutoEventWireup="true"CodeFile="Default.aspx.cs"Inherits="_Defa 
+ 
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns = "http://www.w3.org/1999/xhtml"> 
+<head runat = "server"> 
+<title> </title> 
+</head> 
+<body> 
+<form id = "form1" runat = "server"> 
+<div> 
+ 
+<asp:ScriptManager ID="ScriptManager1" runat="server"> 
+</asp:ScriptManager> 
+<br /> 
+<asp:Timer ID="Timer1" interval="2000" runat="server"> 
+</asp:Timer> 
+<br /> 
+<asp:UpdatePanel ID="UpdatePanel1" runat="server"> 
+ 
+<Triggers> 
+<asp:AsyncPostBackTrigger ControlID="Timer1" EventName="Tick" /> </Triggers> 
+ 
+<ContentTemplate> 
+<asp:AdRotator ID="Adrotator1" runat="server" AdvertisementFile="~/adds.xml" 
+Height="200px" Width="200px"  /> 
+</ContentTemplate> 
+ 
+</asp:UpdatePanel> 
+ 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+Create a folder named Images in your website and paste images of Google, Facebook and Youtube. 
+ 
+
+ 
+ 
+adds.xml: 
+ 
+<?xml version="1.0" encoding="utf-8" ?> 
+ 
+<Advertisements> 
+<Ad> 
+<ImageUrl>~/Images/gooogle.jpg</ImageUrl> 
+<NavigateUrl>http://www.google.com</NavigateUrl> 
+<AlternateText> 
+Pls visit google.com 
+</AlternateText> 
+<Impressions>20</Impressions> 
+<Keyword>Google</Keyword> 
+</Ad> 
+<Ad> 
+<ImageUrl>~/Images/facebook.png</ImageUrl> 
+<NavigateUrl>http://www.facebook.com</NavigateUrl> 
+<AlternateText>Pls visit facebook.com</AlternateText> 
+<Impressions>20</Impressions> 
+<Keyword>Facebook</Keyword> 
+</Ad> 
+<Ad> 
+<ImageUrl>~/Images/youtube.png</ImageUrl> 
+<NavigateUrl>http://www.youtube.com</NavigateUrl> 
+<AlternateText>Pls visit youtube.com</AlternateText> 
+<Impressions>20</Impressions> 
+<Keyword>Youtube</Keyword> 
+</Ad> 
+</Advertisements> 
+ 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 	
+ 
+ 
+ 
+
+ 
+ 
+Practical 2(C) 
+ 
+Aim: Create Web Form to demonstrate use User Controls. 
+ 
+Default.aspx: 
+ 
+<%@PageLanguage="C#"AutoEventWireup="true"CodeFile="Default.aspx.cs"Inherits="_Defa ult"%> 
+ 
+<%@RegisterSrc="~/WebUserControl.ascx"TagPrefix="uc"TagName="Student"%> 
+ 
+<htmlxmlns="http://www.w3.org/1999/xhtml"> 
+<headrunat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1"runat="server"> 
+<div> 
+ 
+<asp:LabelID="Label1" runat="server" Text="WELCOME"></asp:Label> <uc:StudentID="studentcontrol" runat="server"/> 
+ 
+</div> 
+</form> 
+</body> 
+</html>
+WebUserControl.ascx: 
+<%@ControlLanguage="C#"AutoEventWireup="true"CodeFile="WebUserControl.ascx.cs"Inhe rits="WebUserControl"%> <h3>This is User Control</h3> 
+<table> 
+<tr> 
+<td>Name</td> 
+<td> 
+<asp:TextBoxID="txtName" runat="server"></asp:TextBox> 
+</td> 
+</tr> 
+<tr> 
+<td>city</td> 
+<td><asp:TextBoxID="txtCity" runat="server"></asp:TextBox></td> </tr> 
+<tr> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td> 
+<asp:ButtonID="txtsave" runat="server" Text="Save" OnClick="txtsave_click"/> </td> 
+</tr> 
+</table><br/> 
+<asp:LabelID="Lebel1" runat="server" ForeColor="Black" Text=" "></asp:Label> WebUserControl.ascx.cs: 
+ 
+using System; 
+usingSystem.Collections.Generic; usingSystem.Linq; usingSystem.Web; usingSystem.Web.UI; 
+usingSystem.Web.UI.WebControls; 
+ 
+publicpartialclassWebUserControl : System.Web.UI.UserControl 
+{ 
+protectedvoidPage_Load(object sender, EventArgs e) 
+{ 
+} 
+ protectedvoidtxtsave_click(object sender, EventArgs e) 
+{ 
+Label1.Text = "your Name is " + txtName.Text + " and you are form " + txtCity.Text; 
+} 
+} 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+
+Practical 3: Working with beautification and Master pages. 
+ 
+Practical 3(A) 
+ 
+Aim: Create a web application to demonstrate use of Master Page with applying Style and themes for page beautification. 
+? Create a Master page 
+ 
+MasterPage.master: 
+ 
+ 
+ 
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+<asp:ContentPlaceHolder id="head" runat="server"> 
+</asp:ContentPlaceHolder> 
+<link href="StyleSheet.css" rel="Stylesheet" type="text/css" /> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server"> 
+ 
+</asp:ContentPlaceHolder> 
+<asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server"> </asp:ContentPlaceHolder> 
+ 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+? Create a Web Form 
+ 
+Default2.aspx: 
+ 
+<%@ Page Theme="Theme1" Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default2.aspx.cs" Inherits="Default2" %> 
+ 
+ 
+ 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server"> </asp:Content> 
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server"> 
+ 
+<asp:Label ID="Label1" runat="server" Text="AWP"></asp:Label><br /><br /> 
+<asp:Label ID="Label2" runat="server" Text="JAVA"></asp:Label><br /><br /> 
+<asp:Label ID="Label3" runat="server" Text=""></asp:Label> 
+<asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click" /><br /><br /> 
+ 
+</asp:Content> 
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server"> </asp:Content> 
+ 
+Default2.aspx.cs: 
+ 
+ 
+public partial class Default2 : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+ 
+} 
+protected void Button1_Click(object sender, EventArgs e) { 
+Label1.Text = "AWP"; 
+Label2.Text = "Practicals"; 
+Label3.Text = "Author : FQ "; 
+} 
+} 
+ 
+ 
+ 
+? Create an exertnal Style Sheet 
+Stylesheet.css: 
+ 
+ 
+ 
+body { 
+background-color:pink; font-family:Cooper Black; 
+font-size:18px; 
+ 
+} h1 { 
+text-align:center; text-decoration:underline; 
+} h2 { text-align:right; font-size:larger; 
+font-family:Arabic Transparent; 
+} 
+ 
+h3 { text-align:left; font-family:Chiller; font-size:medium; 
+} 
+ 
+ 
+Right click on your website -> Add ASP.NET Folder -> Themes 
+ 
+In App_themes folder -> Right click -> add new item -> SkinFile.(give name SkinFile.skin) SkinFile.skin: 
+ 
+<%-- 
+Default skin template. The following skins are provided as examples only. 
+ 
+1. Named control skin. The SkinId should be uniquely defined because duplicate SkinId's per control type are not allowed in the same theme. 
+ 
+<asp:GridView runat="server" SkinId="gridviewSkin" BackColor="White" > 
+<AlternatingRowStyle BackColor="Blue" /> 
+</asp:GridView> 
+ 
+2. Default skin. The SkinId is not defined. Only one default control skin per control type is allowed in the same theme. 
+ 
+<asp:Image runat="server" ImageUrl="~/images/image1.jpg" /> --%> 
+ 
+ 
+<asp:Label 	runat="server" 	Text="Label" 	ForeColor="black" 	Font-size="22pt" 	Font- Names="Verdena"></asp:Label> 
+ 
+<asp:Button runat="server" Text="Button" Borderstyle="Solid" Bordercolor="green"/> 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+Practical 3(B): 
+ 
+Aim: Create a web application to demonstrate various States of ASP.NET pages. 
+ 
+1) ViewState: Default.aspx: 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<br /> 
+ 
+<asp:Label ID="Label1" runat="server" Text="View State Data : "></asp:Label> <br /> 
+<asp:Button ID="Button1" runat="server" Text="Get Data" onclick="Button1_Click" /> </div> 
+</form> 
+</body> 
+</html> 
+ 
+Default.aspx.cs: 
+ 
+ 
+protected void Page_Load(object sender, EventArgs e) 
+{ 
+if (!IsPostBack) 
+{ string str = "Farzin qureshi"; if (ViewState["name"] == null) 
+{ 
+ViewState["name"] = str; 
+} 
+} 
+} 
+ 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+Label1.Text = ViewState["name"].ToString(); 
+} 
+} 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+
+2) Cookies: 
+ Cookies.aspx; 
+ 
+<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Cookies.aspx.cs" Inherits="Cookies" %> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body id="BodyTag" runat="server"> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" onselectedindexchanged="DropDownList1_SelectedIndexChanged"> 
+ 
+<asp:ListItem Value="White" Selected="True">Select Color</asp:ListItem> 
+<asp:ListItem Value="Red">Red</asp:ListItem> 
+<asp:ListItem Value="Green">Green</asp:ListItem> 
+<asp:ListItem Value="Blue">Blue</asp:ListItem> 
+<asp:ListItem>yellow</asp:ListItem> 
+</asp:DropDownList> 
+ 
+ 
+</div> 
+</form> 
+</body> </html> 
+ 
+ 
+Cookies.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+ 
+public partial class Cookies : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+ 
+if (!IsPostBack) 
+{ 
+if (Request.Cookies["BackgroundColor"] != null) 
+{ 
+DropDownList1.SelectedValue = Request.Cookies["BackgroundColor"].Value; 
+BodyTag.Style["background-color"] = DropDownList1.SelectedValue; 
+} 
+} 
+ 
+} 
+protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e) { 
+ 
+BodyTag.Style["background-color"] = DropDownList1.SelectedValue; HttpCookie cookie = new HttpCookie("BackgroundColor"); cookie.Value = DropDownList1.SelectedValue; 
+ cookie.Expires = DateTime.Now.AddMilliseconds(20); 
+ 
+//cookie.Expires = now.AddSeconds(30); Response.Cookies.Add(cookie); 
+ 
+Response.SetCookie(cookie); 
+ 
+} 
+} 
+ 
+ 
+ 
+ 
+ 
+ 
+ _______________________________________________________________________________________________________________________
+            
+ 
+ 
+3) Query String: 
+ 
+QueryString.aspx: 
+ 
+<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="QueryString.aspx.cs" Inherits="QueryString" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+ 
+ 
+<br /> 
+ 
+User ID : <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox><br /><br /> 
+Password : <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox><br /><br /> 
+ 
+<asp:Button ID="Button1" runat="server" Text="Send Values" 
+onclick="Button1_Click" /> 
+</div> 
+</form> 
+</body> </html> 
+QueryString.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; 
+using System.Web.UI.WebControls; 
+ 
+public partial class QueryString : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { } 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+Response.Redirect("Default2.aspx?UserId=" 	+ 	TextBox1.Text 	+ 	"&Password=" 	+ TextBox2.Text); 
+} 
+} 
+ 
+Default2.aspx: 
+ 
+<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default2.aspx.cs" Inherits="Default2" %> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+ 
+<asp:Label 	ID="Label3" 	runat="server" 	Text="Query 	String 	Parameter 	values 	: "></asp:Label><br /> <br /> 
+ 
+User ID : <asp:Label ID="Label1" runat="server" Text=""></asp:Label><br /><br /> 
+ 
+ 
+Password : <asp:Label ID="Label2" runat="server" Text=""></asp:Label> 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+Default2.aspx.cs: 
+ 
+using System; using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+ 
+public partial class Default2 : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) 
+{ 
+if (!IsPostBack) 
+{ 
+Label1.Text = Request.QueryString["UserId"]; 
+Label2.Text = Request.QueryString["Password"]; 
+} 
+} 
+} 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+               
+4) Session And Application State: 
+Global.asax: 
+<%@ Application Language="C#" %> 
+ 
+<script runat="server"> 
+ 
+void Application_Start(object sender, EventArgs e) 
+{ 
+// Code that runs on application startup Application["OnlineUsers"] = 0; 
+ 
+} 
+ 
+void Application_End(object sender, EventArgs e) 
+{ 
+// Code that runs on application shutdown 
+ 
+} 
+ 
+void Application_Error(object sender, EventArgs e) 
+{ 
+// Code that runs when an unhandled error occurs } 
+ 
+void Session_Start(object sender, EventArgs e) 
+{ 
+// Code that runs when a new session is started 
+Application.Lock(); 
+Application["OnlineUsers"] = (int)Application["OnlineUsers"] + 1; 
+Application.UnLock(); 
+} 
+ 
+void Session_End(object sender, EventArgs e) 
+{ 
+// Code that runs when a session ends. 
+// Note: The Session_End event is raised only when the sessionstate mode 
+// is set to InProc in the Web.config file. If session mode is set to StateServer 
+ 
+Application.Lock(); 
+Application["OnlineUsers"] = (int)Application["OnlineUsers"]-1; 
+Application.UnLock(); 
+} 
+ 
+</script> 
+Web.config: 
+ 
+<configuration> 
+ 
+<system.web> 
+<sessionState mode="InProc"/> 
+<compilation debug="true" targetFramework="4.0" /> 
+ 
+</system.web> 
+ 
+</configuration> 
+ 
+ 
+ 
+SessionApplication.aspx: 
+ 
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SessionAppication.aspx.cs" Inherits="SessionAppication" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+Visitors Count : <%=Application["OnlineUsers"].ToString() %> </div> 
+</form> 
+</body> 
+</html> 
+ 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+
+Practical 4: Working with Database 
+ 
+ 
+ 
+Practical 4a 
+ 
+Aim: Create a web application bind data in a multiline textbox by querying in another textbox. 
+Default.aspx 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:TextBox ID="TextBox1" runat="server" TextMode="MultiLine"></asp:TextBox><br /> 
+<asp:Button ID="Button1" runat="server" Text="Execute query" onclick="Button1_Click" /><br /> 
+ 
+<asp:TextBox ID="TextBox2" runat="server" TextMode="MultiLine" Rows="20" Columns="100" ></asp:TextBox><br /> 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+Default.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; using System.Configuration; using System.Data.SqlClient; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+ 
+} 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+string connStr = ConfigurationManager.ConnectionStrings["connStr"].ConnectionString; 
+SqlConnection con = new SqlConnection(connStr); con.Open(); 
+ 
+SqlCommand cmd = new SqlCommand(TextBox1.Text, con); 
+SqlDataReader reader = cmd.ExecuteReader(); TextBox2.Text = ""; 
+ 
+while (reader.Read()) 
+{ 
+TextBox2.Text += Environment.NewLine; 
+ 
+for (int i = 0; i < reader.FieldCount - 1;i++ ) 
+{ 
+TextBox2.Text += reader[i].ToString().PadLeft(15); 
+} 
+} 
+ 
+reader.Close(); con.Close(); 
+ 
+ 
+} 
+} 
+ 
+ 
+Web.config: 
+ 
+<?xml version="1.0"?> 
+ 
+<configuration> 
+<system.web> 
+<compilation debug="false" targetFramework="4.0" /> </system.web> 
+ 
+<connectionStrings> 
+	<add 	name="connStr" 	connectionString="Data 
+	Source=.\SQLEXPRESS;AttachDbFilename=C:\Users\MITIN\Documents\Visual 	Studio 
+2010\WebSites\WebSite2\App_Data\Database.mdf;Integrated 	 	Security=True;User Instance=True"/> 
+</connectionStrings> 
+ 
+</configuration> 
+ 
+ 	
+
+  _______________________________________________________________________________________________________________________
+ 
+ 
+Practical 4b 
+ 
+Aim: create an application to display records by using Database. 
+Default.apsx: 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:Label 	ID="Label1" 	runat="server" 	Text="customer 	details" 	Font-Size="X- Large"></asp:Label><br /> 
+<asp:Label ID="Label2" runat="server" Text=" "></asp:Label><br /><br /> 
+ 
+<asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click" /> </div> 
+</form> 
+</body> 
+</html> 
+ 
+Default.aspx.cs: 
+ 
+using System; using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; using System.Configuration; 
+using System.Data.SqlClient; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+} 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+string connStr = ConfigurationManager.ConnectionStrings["connStr"].ConnectionString; 
+SqlConnection con = new SqlConnection(connStr); 
+SqlCommand cmd = new SqlCommand("Select ADDRESS , CITY , STATE from 
+CUSTOMER", con); con.Open(); 
+ 
+ SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+{
+Label2.Text += reader["ADDRESS"].ToString() + " " + reader["city"].ToString() + " , STATE "
++reader["STATE"].ToString() + "<br>";
+}
+reader.Close(); con.Close();
+{ 
+} 
+} 
+} 
+ 
+ 
+<?xml version="1.0"?>
+<!--
+For more information on how to configure your ASP.NET application, please visit http://go.microsoft.com/fwlink/?LinkId=169433
+-->
+<configuration>
+<system.web>
+<compilation debug="false" targetFramework="4.0" />
+</system.web>
+<connectionStrings>
+<add name="connStr" connectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=C:\Users\MITIN\Documents\Visual Studio 2010\WebSites\WebSite3\App_Data\Database.mdf;Integrated Security=True;User Instance=True"/>
+</connectionStrings>
+</configuration>
+Output: 
+ 
+ 
+ 
+  _______________________________________________________________________________________________________________________
+ 
+ 
+
+Practical 4c 
+ 
+Aim: Demonstrate the use of DataList link Control. 
+ Steps: 
+* Do all the Database related steps done in practicals 6a and 6b. ? Write connection string in web.config file 
+
+ 
+
+ 
+ 
+ 
+
+ 
+
+ 
+ _______________________________________________________________________________________________________________________
+ 
+
+ 
+ 
+Practical 5: Working with Databases 
+ 
+practical5(A)  
+Aim: Create a web application to display Databinding using Dropdow n 
+list Control. 
+ 
+* Do all the Database related steps done in practicals 6a and 6b. 
+* Write connection string in web.config file 
+* Add a web form 
+ 
+ 
+Default.aspx: 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:DropDownList ID="DropDownList1" runat="server"> 
+</asp:DropDownList> 
+<asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click1" /> 
+<asp:Label ID="Label1" runat="server" 
+Text="Label"></asp:Label> 
+</div> 
+</form> 
+</body> 
+</html> 
+Default.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+using System.Data; using System.Data.SqlClient; 
+using System.Configuration; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) 
+{ 
+if (IsPostBack == false) 
+{ 
+string connStr = ConfigurationManager.ConnectionStrings["connStr"].ConnectionString; 
+SqlConnection con = new SqlConnection(connStr); 
+SqlCommand cmd = new SqlCommand("Select City from Customer", con); con.Open(); 
+SqlDataReader reader = cmd.ExecuteReader(); 
+DropDownList1.DataSource = reader; 
+DropDownList1.DataTextField = "City"; 
+DropDownList1.DataBind(); 
+reader.Close(); con.Close(); 
+} 
+ 
+} 
+ 
+protected void Button1_Click1(object sender, EventArgs e) { 
+Label1.Text = "The City you have selected is : " + DropDownList1.SelectedValue; 
+ 
+} 
+}
+Web.config: 
+ 
+<configuration> 
+ 
+<system.web> 
+<compilation debug="false" targetFramework="4.0" /> 
+</system.web> 
+<connectionStrings> 
+	<add 	name="connStr" 	connectionString="Data 
+Source=.\SQLEXPRESS;AttachDbFilename=C:\Users\Elphinstone\Desktop\AWP\AWP PRAC 
+	FINAL\AWP 	 	PRAC\Prac7aDataBinding\App_Data\Database.mdf;Integrated 
+Security=True;User Instance=True" /> 
+ 
+</connectionStrings> 
+</configuration> 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+
+Practical5(B) 
+ 
+Aim: Create a web application to display the title of the employee with the help of his first name. 
+* Do all the Database related steps done in practicals 6a and 6b. 
+* Write connection string in web.config file 
+* Add a web form 
+ 
+ 
+Default.aspx: 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:DropDownList ID="DropDownList1" runat="server"> 
+</asp:DropDownList> 
+ 
+<asp:Button ID="Button1" runat="server" Text="Button" onclick="Button1_Click" /> <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label> </div> 
+</form> 
+</body> 
+</html> 
+Default.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+using System.Data; using System.Data.SqlClient; 
+using System.Configuration; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) 
+{ 
+if (IsPostBack == false) 
+{ 
+string connStr = ConfigurationManager.ConnectionStrings["connStr"].ConnectionString; 
+SqlConnection con = new SqlConnection(connStr); 
+SqlCommand cmd = new SqlCommand("Select FIRST_NAME , TITLE from Employee", con); con.Open(); 
+SqlDataReader reader = cmd.ExecuteReader(); 
+DropDownList1.DataSource = reader; 
+DropDownList1.DataTextField = "First_Name"; 
+DropDownList1.DataValueField = "Title"; 
+DropDownList1.DataBind(); 
+reader.Close(); con.Close(); 
+} } 
+protected void Button1_Click(object sender, EventArgs e) { 
+Label1.Text = "Your Title is : " + DropDownList1.SelectedValue; 
+} 
+} 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+ 
+ 
+Practical5(C) 
+ 
+Aim: Create a web application to display data using Disconnected Data Access and Data binding using GridView. 
+* Do all the Database related steps done in practicals 6a and 6b. 
+* Write connection string in web.config file 
+* Add a web form 
+ 
+Default.aspx: 
+ 
+<html> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:Button ID="Button1" runat="server" Text="Show Disconnected Fetched Data" onclick="Button1_Click" /> <br /> <br /> 
+ 
+<asp:GridView ID="GridView1" runat="server"> 
+</asp:GridView> 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+Default.aspx.cs: 
+ 
+using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; using System.Configuration; using System.Data; 
+using System.Data.SqlClient; 
+ 
+public partial class Default : System.Web.UI.Page 
+{ protected void Page_Load(object sender, EventArgs e) { 
+ 
+} 
+protected void Button1_Click(object sender, EventArgs e) 
+{ string connStr = ConfigurationManager.ConnectionStrings["connStr"].ConnectionString; 
+SqlConnection con = new SqlConnection(connStr); 
+SqlDataAdapter da = new SqlDataAdapter(); 
+DataSet ds = new DataSet(); 
+SqlCommand cmd = new SqlCommand("Select * from Customer",con); 
+cmd.CommandType = CommandType.Text; 
+da.SelectCommand = cmd; da.Fill(ds, "Product"); 
+GridView1.DataSource = ds.Tables[0]; 
+GridView1.DataBind(); 
+}  
+} 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+
+ 
+Practical 6;Working with AJAX and XML 
+ 
+Practical 6(A) 
+ 
+Aim: Create a web application to demonstrate reading and writing operation in XML 
+ 
+Default.aspx: 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+ 
+<asp:Label ID="Label1" runat="server"Text="Label"> 
+</asp:Label> <br /> <br /> 
+<asp:Button ID="Button1" runat="server" Text="XML Writer" onclick="Button1_Click" /> 
+<br /> 
+<br /> 
+<br /> 
+<asp:ListBox 	ID="ListBox1" 	runat="server" 	Rows="15" style="width:200px;"></asp:ListBox> 
+<br /> 
+<br /> 
+<asp:Button ID="Button2" runat="server" Text="XML Reader" onclick="Button2_Click" /> </div> 
+</form> 
+</body> 
+</html> 
+Default.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Xml; 
+using System.Web.UI.WebControls; 
+ 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+ 
+} 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+XmlTextWriter writer=new XmlTextWriter("F:\\AWP\\prac 10A\\Demo.xml",null); writer.WriteStartDocument(); writer.WriteStartElement("Details",""); writer.WriteElementString("ID","1"); 
+writer.WriteElementString("Firstname","chetan"); 
+ 
+writer.WriteElementString("Lastname","bhagat"); writer.WriteElementString("Salary","15000"); writer.WriteEndElement(); writer.WriteEndDocument(); 
+writer.Close(); 
+Label1.Text="Data Written successfully"; 
+ 
+} protected void Button2_Click(object sender, EventArgs e) 
+{ 
+String xmlNode = "F:\\AWP\\prac 10A\\Demo.xml"; XmlReader xReader=XmlReader.Create(xmlNode); 
+while(xReader.Read()) 
+{ 
+switch(xReader.NodeType) 
+{ 
+case XmlNodeType.Element: 
+ListBox1.Items.Add("<"+xReader.Name+">"); break; 
+case XmlNodeType.Text: 
+ListBox1.Items.Add(xReader.Value); break; case XmlNodeType.EndElement: 
+ListBox1.Items.Add("<"+xReader.Name+">"); break; 
+ 
+} 
+} 
+} 
+} 
+ 
+Demo.xml: 
+ 
+<?xml 
+version="1.0"?><Details><ID>1</ID><Firstname>chetan</Firstname><Lastname>bhagat</Las tname><Salary>15000</Salary></Details> 
+ 
+ 
+  _______________________________________________________________________________________________________________________
+ 	
+
+ 
+ 
+Practical6(B) 
+Aim: Create a web application to demonstrate from security and windows security with proper authentication and authorization properties. 
+Default.aspx: 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+ 
+</div> 
+<p> 
+UserName:<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox> </p> 
+<p> 
+Password:<asp:TextBox ID="TextBox2" runat="server" 
+TextMode="Password"></asp:TextBox> 
+</p> 
+<p> 
+<asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Login" /> </p> 
+<p> 
+<asp:CheckBox ID="CheckBox1" runat="server" Text="Check here if this is not a public computer" /> 
+</p> 
+<p> 
+<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label> </p> 
+</form> 
+</body> 
+</html> 
+Default.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+using System.Web.Security; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) 
+{ } 
+protected bool authenticate(String uname, String pass) 
+{ 
+if (uname == "chetan") 
+{ 
+if (pass == "joker123") 
+return true; 
+} 
+if (uname == "kalpak") 
+{ 
+if (pass == "kpk123") 
+return true; 
+} 
+if (uname == "shashank") 
+{ 
+if (pass == "svr123") 
+return true; 
+} 
+return false; 
+} 
+ 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+if (authenticate(TextBox1.Text, TextBox2.Text)) 
+{ 
+FormsAuthentication.RedirectFromLoginPage(TextBox1.Text, CheckBox1.Checked); 
+Session["Username"] = TextBox1.Text; 
+Response.Redirect("Default2.aspx"); 
+} else 
+{ 
+Response.Write("Invalid username or password"); 
+} 
+} 
+} 
+ 
+Default2.aspx: 
+ 
+<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default2.aspx.cs" Inherits="Default2" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label> </div> 
+</form> 
+</body> 
+</html> 
+ 
+Default2.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; using System.Web; using System.Web.UI; using System.Web.UI.WebControls; 
+ 
+public partial class Default2 : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) 
+{ 
+if (Session["Username"] != null) 
+{ 
+Label1.Text ="Hello " + Session["Username"].ToString(); 
+} 
+}} 
+ 
+ 
+ 
+ 
+ 
+ 	 _______________________________________________________________________________________________________________________
+ 
+  
+
+
+Practical6(C) 
+Aim: create a web application to demonstrate use of various Ajax Controls. 
+ 
+Default.aspx 
+ 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+<%@ 	Register 	Assembly="AjaxControlToolkit" 	Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:ScriptManager ID="ScriptManager1" runat="server"> </asp:ScriptManager> 
+ 
+	<asp:TextBox 	ID="TextBox1" 	runat="server" 	rows="20" 	Columns="80" 
+TextMode="MultiLine"></asp:TextBox> 
+	<ajaxToolkit:HtmlEditorExtender 	ID="HtmlEditorExtender1" 	runat="server" 
+EnableSanitization="False" TargetControlID="TextBox1"> 
+<Toolbar> 
+<ajaxToolkit:Bold /> 
+<ajaxToolkit:Copy /> 
+<ajaxToolKit:Bold /> <ajaxToolkit:Cut /> 
+<ajaxToolkit:Paste /> 
+<ajaxToolkit:JustifyCenter /> 
+<ajaxToolKit:JustifyRight /> 
+<ajaxToolKit:JustifyLeft /> 
+</Toolbar> 
+</ajaxToolkit:HtmlEditorExtender> 
+ 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+ 
+ 
+ 
+ 
+  _______________________________________________________________________________________________________________________
+ 
+ 
+
+Practical no 7: 
+Aim: Program to create and use DLL. 
+ 
+Steps: 
+ 
+In Visual Studio -> file -> new -> Project -> select Class Library 
+ 
+ 
+ClassLibrary1.cs: 
+ 
+using System; 
+using System.Collections.Generic; using System.Linq; 
+using System.Text; 
+ 
+namespace ClassLibrary1 
+{ 
+public class Class1 
+{ 
+public string UpperConvert(string text) 
+{ 
+return text.ToUpper(); 
+} 
+public string LowerConvert(string text) 
+{ 
+return text.ToLower(); 
+} 
+} 
+} 
+ 
+Save your and click on Build Solution in Build Menu. 
+ 
+This code will generate .dll for your program (ClassLibrary1.dll) 
+ 
+ 
+ 
+Then click on file close solution 
+Create a new website and write the following codes in a web form Default.aspx: 
+	<%@ 	Page 	Language="C#" 	AutoEventWireup="true" 	CodeFile="Default.aspx.cs" 
+Inherits="_Default" %> 
+ 
+	<!DOCTYPE 	html 	PUBLIC 	"-//W3C//DTD 	XHTML 	1.0 	Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+ 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head runat="server"> 
+<title></title> 
+</head> 
+ 
+<body> 
+<form id="form1" runat="server"> 
+<div> 
+<asp:Button ID="Button1" runat="server" Text="UPPER" style="height:26px" onclick="Button1_Click" /> 
+<asp:Button ID="Button2" runat="server" Text="LOWER" onclick="Button2_Click" /> 
+<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox> 
+ 
+</div> 
+</form> 
+</body> 
+</html> 
+ 
+ 
+Right Click on your website -> Add Reference Then browse to the ClassLibrary1.dll file you created. Default.aspx.cs: 
+ 
+using System; 
+using System.Collections.Generic; 
+using System.Linq; using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls; 
+using ClassLibrary1; 
+ 
+public partial class _Default : System.Web.UI.Page 
+{ 
+protected void Page_Load(object sender, EventArgs e) { 
+} 
+protected void Button1_Click(object sender, EventArgs e) 
+{ 
+Class1 t = new Class1(); 
+TextBox1.Text = t.UpperConvert(TextBox1.Text); 
+ 
+} 
+protected void Button2_Click(object sender, EventArgs e) 
+{ 
+Class1 t = new Class1(); 
+TextBox1.Text = t.LowerConvert(TextBox1.Text); 
+} 
+} 
+ 
+ 
+ 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+
+ 
+ 
+ 
+
+ 
+

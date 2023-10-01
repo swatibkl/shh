@@ -1,0 +1,459 @@
+
+
+Practical no 1A 
+
+Aim: Light Single LED with python using Raspberry Pi.
+
+Source Code:
+Import RPi.GPIO as a
+From time import sleep
+
+a.setmode(a.BOARD)
+ledPin=22
+a.setup(ledPin,a.OUT)
+a.output(ledPin,False)
+
+try:
+     while True:
+		a.output(ledPin,True)
+		print(“LED ON”)
+		a.output(ledPin,False)
+		print(“LED OFF”)
+		sleep(2)
+finally:
+	a.output(ledPin,False)
+	a.cleanup()
+
+
+
+
+Hardware Connectivity:
+Along with the basic setup you will require the following components to get started with the GPIO pins as follows:
+1.LED
+2.Connecting Wires
+
+ _______________________________________________________________________________________________________________________
+ 
+
+
+
+
+Practical no 1B
+
+Aim: Display different LED Patterns with Raspberry Pi.
+
+Source Code:
+import RPi.GPIO as a
+from time import sleep
+
+a.setmode(a.BOARD)
+a.setup(11,a.OUT)
+a.setup(13,a.OUT)
+a.setup(15,a.OUT)
+
+for i in range(2):
+	a.output(11,True)
+	print("ON")
+	sleep(2)
+	a.output(11,False)
+	print("OFF")
+	sleep(2)
+	a.output(13,True)
+	print("ON")
+	sleep(2)
+	a.output(13,False)
+	print("OFF")
+	sleep(2)
+	a.output(15,True)
+	print("ON")
+	sleep(2)
+	a.output(15,False)
+	print("OFF")
+	sleep(2)
+print("DONE")
+a.cleanup()
+
+Hardware Connectivity:
+Along with the basic setup you will require the following components to get started with the GPIO pins as follows:
+1.LED
+2.Connecting Wires
+
+ _______________________________________________________________________________________________________________________
+ 
+
+
+
+Practical no 2
+
+Aim: Displaying Time over 4-Digit 7-segment using Raspberry Pi.
+
+Source code:
+import sys
+import time
+import datetime
+import RPi.GPIO as a
+import tm1637
+
+Display=tm1637.TM1637(23,24,tm1637.BRIGHT_TYPICAL)
+Display.Clear()
+Display.SetBrightnes(5)
+while(True):
+	now=datetime.datetime.now()
+	hour=now.hour
+	minute=now.minute
+	second=now.second
+	currenttime=[int(hour/10),hour %10,int(minute/10),minute%10]
+	Display.Show(currenttime)
+	Display.ShowDoublepoint(second%2)
+	time.sleep(1)
+
+
+
+
+Hardware Connectivity:
+For this, you will require the following things along with your initial raspberry
+pi setup.
+1.TM1637  4-digit seven segment Display
+2.Connecting wires
+TM1637 Board
+pin
+Function
+pin
+GND
+Ground
+6
+VCC
++5v Power
+4
+DIO
+Data I/O
+18
+CLK
+Clock
+16
+ _______________________________________________________________________________________________________________________
+ 
+
+
+Practical no 3
+
+Aim: Capturing Images with Pi Camera using Raspberry Pi.
+
+Source Code:
+from time import sleep
+from picamera import PiCamera
+
+camera=PiCamera()
+camera.resolution=(1280,720)
+camera.start_preview()
+sleep(2)
+camera.capture('/home/redhat/Desktop/newImage.jpg')
+camera.stop_preview()
+
+Hardware Connectivity:
+For this, you will require the camera module along with your initial raspberry
+pi setup.
+
+Other Requirements:
+Step1: Update Raspberry Pi.
+	$sudo apt-get update
+
+Step2: Enable Raspberry Pi Camera by using Raspberry Pi Software
+           Configuration Tool(raspi-config).
+	$sudo raspi-config
+
+
+Step3: Select interfacing option ->  Camera  ->  Enable
+	Select interfacing option  ->  I2C  ->  Enable
+
+Step4: Reboot
+	$sudo  reboot
+
+ _______________________________________________________________________________________________________________________
+ 
+
+
+
+Practical no 4
+
+Aim: GPS Module Interfacing using Raspberry Pi.
+
+Hardware Connectivity:
+For this, you require the following things along with your initial raspberry pi
+setup.
+1.GPS Module
+2.USB to TTL converter
+3.Connecting Wires
+
+Other Requirements:
+Step1: Open terminal and type following command to know to which USB port
+            the GPS module is attached:
+	#ls /dev/ttyUSB
+Step2: To check whether the GPS module is connected properly used following 
+	command:
+	#sudo cat /dev/ttyUSB*
+Step3: Installing a GPS Daemon:
+	#sudo apt-get install gpsd gpsd-clients python-gps
+Step4: To enable GPS Daemon:
+	#sudo systemctl enable gpsd.socket
+Step 5: To start GPS Daemon:
+	#sudo systemctl start gpsd.socket
+Step6: The following command will point the gps daemon to our GPS device:
+	#sudo gpsd /dev/ttUSB0  -F  /var/run/gpsd.socket
+
+Step7: Try running cgps which give a less detailed, but still quite nice output.
+ 	#cgps -s
+
+ _______________________________________________________________________________________________________________________
+ 
+
+
+Practical no 5
+
+Aim: RFID Module Interfacing using Raspberry Pi.
+
+Source Code:
+1)rfid_write:
+import RPi.GPIO as a
+from mfrc522 import SimpleMFRC522
+
+reader=SimpleMFRC522
+try:
+	text=input('new data:')
+	print("Now place your tag to write")
+	reader.write(text)
+	print("writter")
+finally:
+	a.cleanup()
+
+
+
+
+
+
+
+
+
+
+2)rfid_read:
+import RPi.GPIO as a
+from mfrc522 import SimpleMFRC522
+
+reader=SimpleMFRC522
+try:
+	id , text = reader.read()
+	print(id)
+	print(text)
+finally:
+	a.cleanup()
+
+Hardware Connectivity:
+For this, you will require the following things along with your initial raspberry
+pi setup:
+1.RFID module
+2.Connecting wires
+Function
+Pin no:
+SDA
+24
+SCK
+23
+MOSI
+19
+MISO
+21
+GND
+6
+RST
+22
+3.3V
+1
+
+Other Requirements:
+Step1: Open terminal and Enable SPI Interface using:
+	$sudo raspi-config
+Step2: Select Interfacing Options  ->  SPI  ->  Enable
+Step3: Reboot Raspberry pi
+	$sudo reboot
+Step4: Check to make sure that SPI is enabled using:
+	$lsmod | grep spi
+Step5: Update  raspberry Pi
+	$sudo apt-get update
+Step6: Install python3-dev,python3-pip packages:
+	$sudo apt-get install  python3-dev python3-pip
+Step7: Install spidev to Raspberry Pi using pip.
+	$sudo pip3 install spidev
+Step8: Install mfrc522 to Rasberry Pi using pip.
+	$sudo pip3 install mfrc522
+          
+
+ _______________________________________________________________________________________________________________________
+ 
+
+Practical no 6
+
+Aim: Controlling Raspberry Pi using Telegram App.
+
+Source Code:
+import time, datetime
+import RPi.GPIO as a
+import telepot
+from telepot.loop import MessageLoop
+
+led1=31
+led2=33
+led3=35
+led4=37
+
+a.setup(led1, a.OUT)
+a.output(led1, 0) #Off initially
+a.setup(led2, a.OUT)
+a.output(led2, 0) #Off initially
+a.setup(led3, a.OUT)
+a.output(led3, 0) #Off initially
+a.setup(led4, a.OUT)
+a.output(led4, 0) #Off initially
+
+def action(msg):
+	chat_id = msg['chat']['id']
+	command = msg['text']
+	print ('Received: %s' % command)
+	if 'on' in command:
+		message = "on"
+		if 'led1' in command:
+			message = message + "led1 "
+			a.output(led1, 1)
+		if 'led2' in command:
+			message = message + "led2"
+			a.output(led2, 1)
+		if 'led3' in command:
+			message = message + "led3 "
+			a.output(led3, 1)
+		if 'led4' in command:
+			message = message + "led4 "
+			a.output(led4, 1)
+		if 'all' in command:
+			message = message + "all "
+			a.output(led1, 1)
+			a.output(led2, 1)
+			a.output(led3, 1)
+			a.output(led4, 1)
+		message = message + "light(s)"
+		telegram_bot.sendMessage (chat_id, message)
+	if 'off' in command:
+		message = "off "
+		if 'led1' in command:
+			message = message + "led1 "
+			a.output(led1, 0)
+		if 'led2' in command:
+			message = message + "led2"
+			a.output(led2, 0)
+		if 'led3' in command:
+			message = message + "led3 "
+			a.output(led3, 0)
+		if 'led4' in command:
+			message = message + "led4"
+			a.output(led4, 0)
+		if 'all' in command:
+			message = message + "all "
+			a.output(led1, 0)
+			a.output(led2, 0)
+			a.output(led3, 0)
+			a.output(led4, 0)
+		message = message + "light(s)"
+		telegram_bot.sendMessage (chat_id, message)
+
+telegram_bot =
+telepot.Bot('6339260913:AAHCGSmO9Ng44kLnOvDmPkNSujztfVC-5T8 ')
+print (telegram_bot.getMe())
+MessageLoop(telegram_bot, action).run_as_thread()
+print ('Up and Running....')
+
+while 1:
+time.sleep(10)
+
+
+Hardware Connectivity:
+For this, you will require the following things along with your initial raspberry
+pi setup:
+1.LED
+2.Connecting wires
+Function
+Pin no:
+led1
+31
+led2
+33
+led3
+35
+led4
+37
+GND
+6
+
+Other Requirements:
+Step1: Install pip on Raspberry Pi.
+	$sudo apt-get install python-pip
+Step2: Install Telegram bot on Raspberry Pi
+	$sudo pip install telepot 
+
+
+
+
+
+
+
+
+ _______________________________________________________________________________________________________________________
+ 
+
+
+Practical no 7
+
+Aim: IOT based Web Controlled Home Automation using Raspberry Pi.
+
+Hardware Connectivity:
+For this, you will require the following things along with your initial raspberry
+pi setup:
+1.LED
+2.Connecting wires
+
+Other Requirements:
+Step1: Update Raspberry Pi
+	$sudo apt-get update
+Step2: Reboot Raspberry Pi
+	$sudo reboot
+Step3: Download version of WebIOPi from link:
+	http://webiopi.trouch.com/Downloads.html
+Step4: Now go  to /home/redhat/Downloads
+	$cd /home/redhat/Downloads
+Step5: Extract the file using tar command.
+	$tar xvzf WebIOPi-x.y.z.tar.gz
+Step6: Now go to WebIOPi.
+	$cd WebIOPi-x.y.z
+Step7: Use the wget command to get the installer of WebIOPi framework.
+$wget https://raw.githubusercontent.com/doublebind/raspi/master/webiopi-pi2bplus.patch
+
+Step8: Install patch file.
+	$patch -p1 -i webiopi -pi2bplus.patch
+Step9: Install setup of WebIOPi framework.
+	$sudo  ./setup.sh
+Step10: Reboot Raspberry Pi
+	$sudo reboot
+Step11: Test WebIOPi installation
+	$sudo webiopi -d -c  /etc/webiopi/config
+Step12: Now start WebIOPi.
+	$sudo /etc/init.d/webiopi  start
+Step13: Use ifconfig to know ip address.
+	$sudo ifconfig
+Now go to link:
+	http://192.168.2.1:8000
+1)Now type username as webiopi and password as raspberry.
+2)Select GPIO Header.
+3)Connect to pin 17 and set pin 17 as an output.
+
+ _______________________________________________________________________________________________________________________
+ 
+
+	
+

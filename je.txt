@@ -1,0 +1,365 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Enterprise Java Practical Manual 
+ 
+ 
+ 
+Practical No1 
+ 
+Aim: Create a simple calculator application using Servlet. 
+ 
+index.html:
+<html>
+<head>
+<title>Calculator App</title>
+</head>
+<body>
+<form method="post" action="CalculatorServlet" >
+EnterFirstNumber: <input type="text" name="txtN1" ><br>
+Enter SecondNumber:<input type="text" name="txtN2"><br>
+Select an Operation:
+<input type="radio" name="opr" value="+">ADDTION
+<input type="radio" name="opr" value="-">SUBSTRACTION
+<input type="radio" name="opr" value="*">MULTIPLY
+<input type="radio" name="opr" value="/">DIVIDE <br>
+<input type="reset">
+<input type="submit" value="Calculate" >
+</form>
+</body>
+</html>
+ 
+CalculatorServlet.java: 
+package mypack;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class CalculatorServlet extends HttpServlet
+{
+public void doPost(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException
+{
+response.setContentType("text/html");
+PrintWriter out = response.getWriter();
+double n1 = Double.parseDouble(request.getParameter("txtN1"));
+double n2 = Double.parseDouble(request.getParameter("txtN2"));
+String opr=request.getParameter("opr");
+double result=0;
+if(opr.equals("+"))result=n1+n2;
+if(opr.equals("-")) result=n1-n2;
+if(opr.equals("*"))result=n1*n2;
+if(opr.equals("/")) result=n1/n2;
+out.println("<h1> Result="+result);
+}
+}
+____________________________________________________________________________________________
+ 
+ 
+ 
+Practical No2(A) 
+ 
+Aim: Create a servlet for a login page. If the username and password are correct then it says message  Hello <username>  else a message  login failed . 
+ 
+index.html:
+<html>
+<head>
+<title>Login Form</title>
+</head>
+<body>
+<form method="post" action="LoginServlet" >
+Enter User ID:<input type="text" name="txtId"><br>
+Enter Password:<input type="password" name="txtPass"><br>
+<input type="reset">
+<input type="submit" value=" Click to Login ">
+</form>
+</body>
+</html>
+
+LoginServlet.java:
+package mypack;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class LoginServlet extends HttpServlet
+{
+public void doPost(HttpServletRequest request, HttpServletResponse
+response) throws ServletException, IOException
+{
+response.setContentType("text/html;charset=UTF-8");
+PrintWriter out = response.getWriter();
+String uname = request.getParameter("txtId");
+String upass = request.getParameter("txtPass");
+if(uname.equals("admin") && upass.equals("12345"))
+{
+out.println("<body bgcolor=blue >");
+out.println("<h1> Welcome !!! "+uname+"</h1>");
+}
+else
+{
+out.println("<body bgcolor=red >");out.println("<h1> Login Fail
+!!! </h1>");
+}
+out.println("</body></html>");
+}
+}
+ _________________________________________________________________________________________________
+ 
+Practical No2(B) 
+ 
+Aim: Create a registration Servlet in Java using JDBC. Accept the details such as Username, Password, Email, and Country from the user using HTML Form and store the registration details in the database. 
+ 
+MySql queries:
+create database LoginDB; use LoginDB;
+create table user(username varchar(20) PRIMARY KEY, password
+varchar(20), email varchar(20), country varchar(20));
+insert into user values ('admin','admin','admin@admin.com','India');
+select * from user;
+
+index.html:
+
+<html>
+<head>
+<title>Registration Page</title>
+</head>
+<body>
+<form method="post" action="RegisterServlet" >
+<H1>Welcome to Registration page</H1>
+EnterUser Name:<input type="text" name="txtUid"><br>
+EnterPassword:<input type="password"name="txtPass"><br>
+EnterEmail:<input type="text" name="txtEmail"><br>
+Enter Country:<input type="text" name="txtCon"><br>
+<input type="reset" ><input type="submit" value="REGISTER" >
+</form>
+</body>
+</html>
+ 
+RegisterServlet.java:
+
+package mypack;
+import java.io.*; import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class RegisterServlet extends HttpServlet
+{
+public void doPost(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException
+{
+response.setContentType("text/html;charset=UTF-8");
+PrintWriter out = response.getWriter();
+String id = request.getParameter("txtUid");
+String ps = request.getParameter("txtPass");
+String em =request.getParameter("txtEmail");
+String co = request.getParameter("txtCon");
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:
+3306/logindb","root","root");
+PreparedStatement pst = con.prepareStatement("insert into uservalues(?,?,?,?)");
+pst.setString(1,id);
+pst.setString(2,ps);
+pst.setString(3,em);
+pst.setString(4,co);
+int row=pst.executeUpdate();
+out.println("<h1>"+row+ " Inserted Succesfullyyyyy");
+}
+catch(Exception e)
+{
+out.println(e);
+}
+}
+}
+ 
+ 
+ 
+ _______________________________________________________________________________________________________________________
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Practical No3 
+ 
+Aim: Using Request Dispatcher Interface create a Servlet which will validate          the password entered by the user, if the user has entered "Servlet" as          password, then he will be forwarded to Welcome Servlet else the user will           stay on the index.html page and an error message will be displayed. 
+ 
+index.html:
+<html>
+<head>
+<title>Request Dispatcher</title>
+</head>
+<body>
+<form action="MainServ" method="post">
+Name:<input type="text" name="uname"/><br/>
+Password:<input type="password" name="upass"/><br/>
+<input type="submit" value="LOGIN"/>
+</form>
+</body>
+</html>
+
+MainServ.java:
+package Servlet;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class MainServ extends HttpServlet
+ {
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse
+response) throws ServletException, IOException
+{
+response.setContentType("text/html");
+PrintWriter out = response.getWriter();
+String n=request.getParameter("uname");
+String p=request.getParameter("upass");
+if(n.equals("admin") && p.equals("root"))
+{
+RequestDispatcher rd=
+request.getRequestDispatcher("Secondserv");
+rd.forward(request, response);
+}
+else
+{
+out.print("Sorry UserName or Password Error!");
+RequestDispatcher rd=
+request.getRequestDispatcher("/index.html");
+rd.include(request, response);
+}
+}
+}
+
+Secondserv.java:
+package Servlet;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class Secondserv extends HttpServlet
+{
+@Override
+protected void doPost(HttpServletRequest request, HttpServletResponse
+response) throws ServletException, IOException
+{
+response.setContentType("text/html");
+PrintWriter out = response.getWriter();
+String name=request.getParameter("uname");
+out.print("Welcome "+ name);
+}
+}
+
+_______________________________________________________________________________
+
+ 
+Practical no4 
+ 
+Aim: Create a Servlet that uses Cookies to store the number of times a user has visited Servlet. 
+ 
+index.html:
+<html>
+<head>
+<title>Cookie Demo</title>
+</head>
+<body>
+<form method="post" action="Cookie1" >
+<input type="submit" value="Click to Count">
+</form>
+</body>
+</html>
+
+Cookie1.java:
+package mypack;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class Cookie1 extends HttpServlet
+{
+int count=1;
+public void doPost(HttpServletRequest request,HttpServletResponse
+response)throws IOException, ServletException
+{
+response.setContentType("text/html");
+PrintWriter out=response.getWriter();
+String s=Integer.toString(count);
+Cookie ck=new Cookie("visit",s);
+response.addCookie(ck);
+int n=Integer.parseInt(ck.getValue());
+if(n==1)
+{
+out.println("Welcome!!!You have visited first time...");
+}
+else
+{
+out.println("You visited"+count+"times...");
+}
+count++;
+out.close();
+}
+}
+__________________________________________________________________
+   
+Practical No5 
+ 
+Aim: Create a servlet demonstrating the use of session creation and destruction.   Also check whether the user has visited this page first time or has visited earlier also using sessions. 
+
+Index.html:
+<html>
+<head>
+<title>Session Demo</title>
+</head>
+<body>
+<form method="post" action="Session1">
+<input type="submit" value="Click to count visit">
+</form>
+</body>
+</html>
+ 
+Session1.java:
+package mypack;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class Session1 extends HttpServlet
+{
+int count=1;
+public void doPost(HttpServletRequest request,HttpServletResponse
+response)throws IOException,ServletException
+{
+ response.setContentType("text/html");
+PrintWriter out=response.getWriter();
+HttpSession hs=request.getSession(true);
+if(hs.isNew())
+{
+out.println("Session is new...You have visited first time");
+}
+else
+{
+out.println("Session is old...You have visited"+count+"times");
+out.println("Session ID= "+hs.getId());
+}
+count++;
+out.close();
+}
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
